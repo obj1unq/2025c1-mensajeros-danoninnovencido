@@ -1,0 +1,36 @@
+import mensajeria.*
+import mensajeros.*
+import destinos.*
+import vehiculos.*
+
+
+
+describe "Casos de prueba" {
+  test "El paquete de George que no está pago no puede ser llevado por Neo a la Matrix" {
+    servicioDeMensajeria.destino(laMatrix)
+    assert.notThat(servicioDeMensajeria.puedeEntregar(neo))
+  }
+
+  test "El paquete de George que SI está pago puede ser llevado por Chuck a la matrix" {
+    paquete.pagarPaquete()
+    servicioDeMensajeria.destino(laMatrix)
+    assert.that(servicioDeMensajeria.puedeEntregar(chuckNorris))
+  }
+
+  test "El paquete de George que SI esta pago NO PUEDE ser llevado por Hawk (80kg) a Brkln con camion y acoplado" {
+    paquete.pagarPaquete()
+    servicioDeMensajeria.destino(puenteDeBrkln)
+    lincolnHawk.pesoPropio(80)
+    lincolnHawk.vehiculo(camion)
+    camion.acoplados(1)
+    assert.notThat(servicioDeMensajeria.puedeEntregar(lincolnHawk))
+  }
+
+  test "El paquete de George que SI está pago PUEDE ser llevado en BICI a Brkln por Hawk" {
+    paquete.pagarPaquete()
+    servicioDeMensajeria.destino(puenteDeBrkln)
+    lincolnHawk.pesoPropio(80)
+    lincolnHawk.vehiculo(bici)
+    assert.that(servicioDeMensajeria.puedeEntregar(lincolnHawk))
+  }
+}
